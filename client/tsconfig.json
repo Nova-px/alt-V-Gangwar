@@ -1,0 +1,24 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "ESNext",
+        "esModuleInterop": true,
+        "outDir": "../../resources/gamemode/client",
+  
+        "strict": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "files": [
+        "node_modules/@altv/types-natives/index.d.ts",
+        "node_modules/@altv/types-client/index.d.ts"
+    ],
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}
