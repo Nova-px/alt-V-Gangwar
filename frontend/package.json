@@ -6,6 +6,7 @@
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
+  "author": "Nova_",
   "dependencies": {
     "toastr": "^2.1.4",
     "vue": "^2.6.11",
