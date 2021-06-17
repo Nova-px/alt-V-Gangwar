@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <v-app dark>
+    <v-app dark>
+        <v-main>
             <HUD v-if="showHUD" />
 
-            <component style="position: absolute;" v-if="window != ''" :is="window" :data="windowArgs" />
-        </v-app>
-    </div>
+            <component v-for="(window, i) in windows" :key="i" style="position: absolute;" :is="window.name" :data="window.data" :mounted="onOpen(window.name)" />
+        </v-main>
+    </v-app>
 </template>
 
 <script>
@@ -20,22 +20,27 @@ export default {
 
     data() {
         return {
-            window: 'Login',
-            windowArgs: {},
+            windows: [],
 
             showHUD: false
         }
     },
 
+    methods: {
+        onOpen(name) {
+            this.$alt.emit("Window::onOpen", name);
+        }
+    },
+
     mounted() {
-        this.$alt.on("Window::show", (window, data) => {
-            this.window = window;
-            this.windowArgs = { ...data };
+        this.$alt.on("Window::show", (name, args) => {
+            this.windows.push({ name, data: { ...args } });
         });
 
-        this.$alt.on("Window::close", () => {
-            this.window = "";
-            this.windowArgs = {};
+        this.$alt.on("Window::close", name => {
+            if(!this.windows.some(x => x.name === name)) return;
+
+            this.windows.slice(this.windows.findIndex(x => x.name === name), 1);
         });
 
         this.$alt.on("Notify", (type, text) => this.$toast(text, { type }));

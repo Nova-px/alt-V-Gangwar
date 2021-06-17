@@ -17,6 +17,8 @@ class AuthController {
 
     onLogin(player: alt.Player, username: string, password: string) {
         if(player.account) return;
+        if(username.length <= 4) return alt.emitClient(player, "Login::Response", "Der Benutzername ist zu kurz. (Mindestens 4 Zeichen)");
+        if(password.length <= 6) return alt.emitClient(player, "Login::Response", "Das Passwort ist zu kurz. (Mindestens 6 Zeichen)");
     }
 }
 
