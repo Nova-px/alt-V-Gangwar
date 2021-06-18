@@ -8,11 +8,6 @@
 import alt from 'alt-server';
 import Account from './classes/Account';
 
-alt.on("playerConnect", (player) => {
-    player.model = alt.hash("mp_m_freemode_01");
-    player.spawn(0, 0, 73, 0);
-});
-
 import "./classes/Account";
 
 import "./controller/AuthController";
@@ -20,7 +15,10 @@ import "./controller/EventController";
 import EventController from './controller/EventController';
 
 EventController.onClient("PlayerReady", player => {
-    
+    player.model = alt.hash("mp_m_freemode_01");
+    player.spawn(0, 0, 73, 0);
+
+    alt.emitClient(player, "Window::show", "Login", {});
 }, false);
 
 declare module "alt-server" {

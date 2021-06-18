@@ -13,6 +13,10 @@ class WebView {
         });
 
         this.webView.on("Window::onOpen", this.onOpen.bind(this));
+
+        EventController.onServer("Window::show", this.showWindow.bind(this));
+        EventController.onServer("Window::close", this.closeWindow.bind(this));
+        EventController.onServer("Window::notify", this.notify.bind(this));
     }
 
     showWindow(name: string, args: {}) {
@@ -24,6 +28,10 @@ class WebView {
 
         const view = View.getByName(name);
         if(view) view.visible = false;
+    }
+
+    notify(type: string, text: string) {
+        this.webView.emit("Notify", type, text);
     }
 
     onOpen(name: string) {

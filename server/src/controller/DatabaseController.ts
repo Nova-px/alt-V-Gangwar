@@ -15,7 +15,7 @@ class DatabaseController {
         this.pool = mysql.createPool({ host: "localhost", user: "gangwar", password: "gangwar", database: "gangwar" });
     }
 
-    async query(command: string, args: any[] = []) {
+    async query(command: string, args: any[] = []): Promise<null | any[]> {
         return new Promise(resolve => {
             this.pool.query(command, args, (err, result) => {
                 if(err) {
