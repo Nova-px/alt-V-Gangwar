@@ -13,6 +13,11 @@ alt.on("playerConnect", (player) => {
     player.spawn(0, 0, 73, 0);
 });
 
+import "./classes/Account";
+
+import "./controller/AuthController";
+import "./controller/EventController";
+
 declare module "alt-server" {
     export interface Player {
         account?: Account;
