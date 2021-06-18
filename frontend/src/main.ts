@@ -16,6 +16,9 @@ Vue.use(Toast, {
     pauseOnFocusLoss: false
 });
 
+if("alt" in window) Vue.config.devtools = false;
+else Vue.config.devtools = true;
+
 new Vue({
   vuetify,
   render: h => h(App)

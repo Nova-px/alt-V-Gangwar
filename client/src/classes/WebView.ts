@@ -6,7 +6,9 @@ class WebView {
 
     constructor() {
         this.webView = new alt.WebView("http://localhost:8080/", true);
-        this.webView.on("load", () => this.webView.focus());
+        this.webView.on("load", () => {
+            this.webView.focus();
+        });
 
         this.webView.on("Window::onOpen", this.onOpen.bind(this));
     }
