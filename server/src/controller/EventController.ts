@@ -13,15 +13,21 @@ class EventController {
 
     onClient(eventName: string, listener: (player: alt.Player, ...args: any[]) => void, needAccount: boolean = true) {
         alt.onClient(eventName, (player, ...args) => {
-            if(needAccount) {
-                if(player.account) listener(player, ...args);
-                else {
-                    // TODO: ban player because invalid event
+            const haveAccount = player.account != undefined;
 
-                    player.kick("Du wurdest vom Anticheat gebannt! Bitte finde dich im Support ein.");
-                }
-            } else listener(player, ...args);
+            if(haveAccount == needAccount) listener(player, ...args);
+            else this.kick(player);
         });
+
+        alt.onClient((event, player, ...args) => {
+            
+        });
+    }
+
+    kick(player: alt.Player) {
+        // TODO: ban player because blocked event
+
+        player.kick("Du wurdest vom Anticheat gebannt! Bitte finde dich im Support ein.");
     }
 }
 
