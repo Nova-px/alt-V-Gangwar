@@ -18,10 +18,6 @@ class EventController {
             if(haveAccount == needAccount) listener(player, ...args);
             else this.kick(player);
         });
-
-        alt.onClient((event, player, ...args) => {
-            
-        });
     }
 
     kick(player: alt.Player) {

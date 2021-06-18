@@ -11,7 +11,7 @@ export default class Controller {
             return;
         }
         
-        alt.log(`[PARADOX] Controller >> ${name} loaded...`);
+        alt.log(`Controller >> ${name} loaded...`);
         alt.everyTick(this.onTick.bind(this));
 
         alt.on("keydown", key => this.onKey(key, true));

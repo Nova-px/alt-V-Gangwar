@@ -1,4 +1,5 @@
 import alt from 'alt-client';
+import EventController from '../controller/EventController';
 import View from './View';
 
 class WebView {
@@ -8,6 +9,7 @@ class WebView {
         this.webView = new alt.WebView("http://localhost:8080/", true);
         this.webView.on("load", () => {
             this.webView.focus();
+            EventController.emitServer("PlayerReady");
         });
 
         this.webView.on("Window::onOpen", this.onOpen.bind(this));

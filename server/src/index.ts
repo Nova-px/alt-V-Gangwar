@@ -17,6 +17,11 @@ import "./classes/Account";
 
 import "./controller/AuthController";
 import "./controller/EventController";
+import EventController from './controller/EventController';
+
+EventController.onClient("PlayerReady", player => {
+    
+}, false);
 
 declare module "alt-server" {
     export interface Player {
