@@ -8,8 +8,6 @@
 import alt from 'alt-server';
 import Account from './classes/Account';
 
-import "./classes/Account";
-
 import "./controller/AuthController";
 import "./controller/EventController";
 import "./controller/CharacterController";
