@@ -6,7 +6,7 @@
  * By downloading you agree that you never will sell this project/files.
  */
 import alt from 'alt-server';
-import argon2 from 'argon2';
+import bcrypt from 'bcryptjs';
 import Account from '../classes/Account';
 import { IDatabaseAccount } from '../interfaces/IAccount';
 import DatabaseController from './DatabaseController';
@@ -24,14 +24,20 @@ class AuthController {
         if(password.length <= 6) return alt.emitClient(player, "Login::Response", "Das Passwort ist zu kurz. (Mindestens 6 Zeichen)");
 
         const res = await DatabaseController.query("SELECT * FROM accounts WHERE username = ?", [username]);
+        console.log(res);
+
         if(res != null) {
             const account: IDatabaseAccount = res[0];
 
-            if(await argon2.verify(account.password, password)) {
+            if(await bcrypt.compare(password, account.password)) {
                 player.account = new Account(account);
-                
+
                 // TODO: login and character creation
-                
+                if(account.character == "{}") {
+                    alt.emit('character:Edit', player);
+                } else {
+                    alt.emit('character:Sync', player, player.account.character);
+                }
             } else return alt.emitClient(player, "Login::Response", "Das angegebene Passwort ist inkorrekt!");
         } else return alt.emitClient(player, "Login::Response", "Es existiert kein Benutzer mit diesem Benutzername!");
     }

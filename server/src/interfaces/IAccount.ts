@@ -8,6 +8,8 @@ export interface IDatabaseAccount {
     kills: number;
     deaths: number;
 
+    character: string;
+
     createdAt: string;
     updatedAt: string;
 }

@@ -17,6 +17,8 @@ export default class Account {
     kills: number;
     deaths: number;
 
+    character: any;
+
     createdAt: Date;
     updatedAt: Date;
 
@@ -29,6 +31,8 @@ export default class Account {
         
         this.kills = data.kills;
         this.deaths = data.deaths;
+        
+        this.character = JSON.parse(data.character);
 
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = new Date(data.updatedAt);
