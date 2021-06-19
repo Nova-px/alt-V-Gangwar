@@ -1,4 +1,4 @@
-import { IDatabaseAccount } from "../interfaces/IAccount";
+import IDatabaseAccount from "../interfaces/IAccount";
 
 /**
  * @license
@@ -6,7 +6,7 @@ import { IDatabaseAccount } from "../interfaces/IAccount";
  * OPEN SOURCE GANGWAR PROJECT 
  * (C) 2021 Nova
  * By downloading you agree that you never will sell this project/files.
- */
+*/
 export default class Account {
     id: number;
 
@@ -17,7 +17,42 @@ export default class Account {
     kills: number;
     deaths: number;
 
-    character: any;
+    character: {
+        colorOverlays: {
+            color1: number,
+            color2: number,
+            opacity: number,
+            id: number,
+            value: number
+        }[],
+        eyebrows: number,
+        eyeborwsColor1: number,
+        eyes: number,
+        eyebrowsOpacity: number,
+        facialHairOpacity: number,
+        faceFather: number,
+        faceMix: number,
+        faceMother: number,
+        facialHair: number,
+        facialHairColor1: number,
+        hair: number,
+        hairColor1: number,
+        hairColor2: number,
+        hairOverlay: {
+            collection: string,
+            overlay: string
+        },
+        opacityOverlays: {
+            id: number,
+            opacity: number,
+            value: number
+        }[],
+        sex: number,
+        skinFather: number,
+        skinMix: number,
+        skinMother: number,
+        structure: number[]
+    };
 
     createdAt: Date;
     updatedAt: Date;

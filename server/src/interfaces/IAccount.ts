@@ -1,4 +1,11 @@
-export interface IDatabaseAccount {
+/**
+ * @license
+
+ * OPEN SOURCE GANGWAR PROJECT 
+ * (C) 2021 Nova
+ * By downloading you agree that you never will sell this project/files.
+*/
+export default interface IDatabaseAccount {
     id: number;
 
     username: string;

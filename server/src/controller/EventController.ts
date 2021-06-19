@@ -4,8 +4,7 @@
  * OPEN SOURCE GANGWAR PROJECT 
  * (C) 2021 Nova
  * By downloading you agree that you never will sell this project/files.
- */
-
+*/
 import alt from 'alt-server';
 
 class EventController {
