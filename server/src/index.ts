@@ -19,8 +19,9 @@ EventController.onClient("PlayerReady", async player => {
     player.model = alt.hash("mp_m_freemode_01");
     player.spawn(0, 0, 73, 0);
 
-    if(await BanController.checkPlayer(player)) {
-        player.kick(`Du bist gesperrt! Bitte melde dich im Support.`);
+    const { banned, reason } = await BanController.checkPlayer(player);
+    if(banned) {
+        player.kick(`Du bist gesperrt! Grund: ${reason} Bitte melde dich im Support.`);
         return;
     }
 

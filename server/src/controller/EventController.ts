@@ -22,6 +22,8 @@ class EventController {
     }
 
     async kick(player: alt.Player, eventName: string, needAccount: boolean) {
+        alt.log(`Blocked event: ${eventName} - ${needAccount}`);
+        
         alt.emit("Ban::Player", player, `Blocked event: ${eventName} - ${needAccount}`, 0, 0);
         player.kick("Du wurdest vom Anticheat gesperrt! Bitte finde dich im Support ein.");
     }

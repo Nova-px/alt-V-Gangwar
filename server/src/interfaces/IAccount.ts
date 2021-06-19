@@ -14,6 +14,8 @@ export default interface IDatabaseAccount {
 
     kills: number;
     deaths: number;
+    level: number;
+    xp: number;
 
     characterData: string;
 

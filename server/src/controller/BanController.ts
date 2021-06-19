@@ -23,7 +23,8 @@ class BanController {
     }
 
     async ban(player: alt.Player, reason: string, adminId: number, minutes: number) {
-        const targetId = player.account != null ? player.account.id : 0;
+        if(!player) return;
+        const targetId = player.account ? player.account.id : 0;
 
         let expireDate = moment(Date.now()).add(minutes, "m").toDate();
         if(minutes == 0) expireDate = moment(Date.now()).add(5, "y").toDate();
@@ -49,11 +50,11 @@ class BanController {
                 if(!player.hwidHash.includes(banData.hwid) || !player.hwidExHash.includes(banData.hwidEx) || !player.socialId.includes(banData.socialId))
                     await this.ban(player, "Doppelaccounting", 0, 0);
 
-                return true;
+                return { banned: true, reason: banData.reason };
             }
 
-            return false;
-        } else return false;
+            return { banned: false, reason: "None" };
+        } else return { banned: false, reason: "None" };
     }
 
     async checkByAccountId(id: number) {

@@ -21,6 +21,12 @@
 <script>
 export default {
     name: "HUD",
+    props: {
+        data: {
+            type: Object,
+            required: false
+        },
+    },
     data() {
         return {
             kills: 1250,
@@ -43,12 +49,12 @@ export default {
     },
 
     methods: {
-        login() {
-            this.$alt.emit("Auth::Login", this.username, this.password);
-        },
         getStyleForXP() {
+            const firstValue = this.xpPercent > 0;
+            const secondValue = this.xpPercent > 0 ? this.xpPercent - 100 : 100;
+
             return {
-                background: `repeating-linear-gradient(#191919, #191919 ${this.xpPercent}%, #17e32f ${this.xpPercent - 100}%, #17e32f 100%)`
+                background: `repeating-linear-gradient(#191919, #191919 ${firstValue}%, #17e32f ${secondValue}%, #17e32f 100%)`
             }
         }
     },
@@ -62,6 +68,18 @@ export default {
             this.xp = xp;
             this.maxXP = maxXP;
         });
+        
+        const data = this.data;
+        if(data) {
+            this.kills = data.kills;
+            this.deaths = data.deaths;
+            this.level = data.level;
+
+            this.xp = data.xp;
+            this.maxXP = data.maxXP;
+
+            console.log(this.xpPercent);
+        }
     }
 }
 </script>
@@ -94,16 +112,16 @@ export default {
     border-radius: 100px;
 }
 
-.item .v-icon.v-icon {
-    position: relative;
+.item .v-icon.v-icon::before {
+    position: absolute;
 
-    top: 20%;
-    left: 23%;
+    left: 10.7px;
+    top: -3px;
 }
 
 .item p {
     position: relative;
-    color: black;
+    color: white;
 
     top: -14px;
     left: 65px;

@@ -1,8 +1,6 @@
 <template>
     <v-app dark>
         <v-main>
-            <HUD v-if="showHUD" />
-
             <component v-for="(window, i) in windows" :key="i" style="position: absolute;" :is="window.name" :data="window.data" :mounted="onOpen(window.name)" v-on:showWindow="showWindow" v-on:closeWindow="closeWindow" />
         </v-main>
     </v-app>
@@ -22,8 +20,7 @@ export default {
 
     data() {
         return {
-            windows: [],
-            showHUD: false
+            windows: []
         }
     },
 
@@ -33,19 +30,19 @@ export default {
         },
         showWindow(name, args) {
             if(this.windows.some(x => x.name === name)) return;
-            this.windows.push({ name, data: args });
+            this.windows.push({ name: name, data: { ...args } });
         },
         closeWindow(name) {
             if(!this.windows.some(x => x.name === name)) return;
 
-            this.windows = this.windows.filter(x => x.name != name)
+            this.windows = this.windows.filter(x => x.name != name);
             this.$alt.emit("Window::onClose", name);
         }
     },
 
     mounted() {
-        this.$alt.on("Window::show", this.showWindow.bind(this));
-        this.$alt.on("Window::close", this.closeWindow.bind(this));
+        this.$alt.on("Window::show", this.showWindow);
+        this.$alt.on("Window::close", this.closeWindow);
         this.$alt.on("Notify", (data) => this.$toast(data.text, { type: data.type }));
 
         if(!("alt" in window)) {

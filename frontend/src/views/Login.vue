@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height>
+    <v-container fluid fill-height>
         <v-row align="center" justify="center">
             <v-col sm="8" lg="6" col="12">
                 <v-card elevation="5" sheet>
@@ -55,6 +55,9 @@ export default {
         switchToRegister() {
             this.$emit("showWindow", "Register", {});
             this.$emit("closeWindow", "Login");
+        },
+        onKeyUp(ev) {
+            if(ev.key == "Enter") this.login();
         }
     },
 
@@ -69,7 +72,18 @@ export default {
             this.$refs.passwordInput.focus();
         });
 
-        if(this.data && this.data.username) this.username = this.data.username;
+        const data = this.data;
+        if(data && data.username) {
+            this.username = data.username;
+        }
+
+        window.addEventListener("keydown", this.onKeyUp);
+
+        this.$alt.on("Window::close", name => {
+            if(name != "Login") return;
+            
+            window.removeEventListener("keydown", this.onKeyUp);
+        });
     }
 }
 </script>

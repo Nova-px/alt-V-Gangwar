@@ -34,7 +34,16 @@ class AuthController {
                 player.account = new Account(account);
 
                 if(account.characterData == "{}") alt.emit('character:Edit', player);
-                else alt.emit('character:Sync', player, player.account.character);
+                else {
+                    alt.emit('character:Sync', player, player.account.character);
+                    alt.emitClient(player, "Window::show", "HUD", {
+                        kills: player.account.kills,
+                        deaths: player.account.kills,
+                        level: player.account.level,
+                        xp: player.account.xp,
+                        maxXP: player.account.maxXP
+                    });
+                }
             } else return alt.emitClient(player, "Login::Response", "Das angegebene Passwort ist inkorrekt!");
         } else return alt.emitClient(player, "Login::Response", "Es existiert kein Benutzer mit diesem Benutzername!");
     }

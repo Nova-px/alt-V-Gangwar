@@ -8,7 +8,7 @@ class EventController extends Controller {
 
     onServer(eventName: string, listener: (...args: any[]) => void) {
         if(alt.isInDebug()) alt.log(`Event >> Listening on ${eventName}`);
-        alt.onServer(eventName, (eventName: string, ...args: any[]) => listener(eventName, listener));
+        alt.onServer(eventName, (eventName: string, ...args: any[]) => listener(eventName, ...args));
     }
 
     emitServer(eventName: string, ...args: any[]) {

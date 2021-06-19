@@ -22,7 +22,7 @@ class WebView {
     }
 
     showWindow(name: string, args: {}) {
-        this.webView.emit("Window::show", name, args);
+        this.webView.emit("Window::show", name, { ...args });
     }
 
     closeWindow(name: string) {

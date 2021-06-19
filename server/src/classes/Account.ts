@@ -16,6 +16,9 @@ export default class Account {
 
     kills: number;
     deaths: number;
+    level: number;
+    xp: number;
+    maxXP: number;
 
     character: {
         colorOverlays: {
@@ -66,6 +69,9 @@ export default class Account {
         
         this.kills = data.kills;
         this.deaths = data.deaths;
+        this.level = data.level;
+        this.xp = data.xp;
+        this.maxXP = (this.level * 250);
         
         this.character = JSON.parse(data.characterData);
 
