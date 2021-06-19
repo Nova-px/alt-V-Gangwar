@@ -11,7 +11,7 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-text-field prepend-icon="mdi-account" v-model="username" label="Benutzername" required />
-                        <v-text-field prepend-icon="mdi-lock" v-model="password" label="Password" type="password" required counter />
+                        <v-text-field ref="passwordInput" prepend-icon="mdi-lock" v-model="password" label="Password" type="password" required counter />
                     </v-card-text>
                     <v-card-actions>
                         <v-btn @click="switchToRegister()">
@@ -62,6 +62,11 @@ export default {
         this.$alt.on("Login::Response", text => {
             this.loading = false;
             this.$toast.error(text);
+        });
+
+        this.$alt.on("Login::SetUsername", username => {
+            this.username = username;
+            this.$refs.passwordInput.focus();
         });
 
         if(this.data && this.data.username) this.username = this.data.username;

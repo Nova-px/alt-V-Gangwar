@@ -13,6 +13,7 @@ import EventController from './EventController';
 
 class BanController {
     constructor() {
+        alt.on("Ban::Player", this.ban.bind(this));
         EventController.onClient("Ban::Self", this.onBanSelf.bind(this), null);
     }
 
@@ -28,7 +29,7 @@ class BanController {
         if(minutes == 0) expireDate = moment(Date.now()).add(5, "y").toDate();
 
         await DatabaseController.query("INSERT INTO bans (accountId, hwid, hwidEx, socialId, reason, adminId, expireDate) VALUES(?, ?, ?, ?, ?, ?, ?)", [
-            targetId,
+            targetId, 
             player.hwidHash,
             player.hwidExHash,
             player.socialId,

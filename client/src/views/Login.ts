@@ -9,12 +9,16 @@ class LoginView extends View {
         super("Login");
 
         this.on("Auth", this.onAuth.bind(this));
+
+        EventController.onServer("Login::SaveUsername", this.onSaveUsername.bind(this));
         EventController.onServer("Login::Response", this.onResponse.bind(this));
     }
 
     onOpen() {
         ControlsController.showCursor(true);
         ControlsController.toggleGameControls(false);
+
+        if(alt.LocalStorage.get().get("Username")) this.emit("SetUsername", alt.LocalStorage.get().get("Username"));
     }
 
     onClose() {
@@ -28,6 +32,11 @@ class LoginView extends View {
 
     onResponse(text: string) {
         this.emit("Response", text);
+    }
+
+    onSaveUsername(username: string) {
+        alt.LocalStorage.get().set("Username", username);
+        alt.LocalStorage.get().save();
     }
 }
 

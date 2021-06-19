@@ -6,7 +6,6 @@
  * By downloading you agree that you never will sell this project/files.
 */
 import alt from 'alt-server';
-import BanController from './BanController';
 
 class EventController {
     constructor() {}
@@ -23,7 +22,7 @@ class EventController {
     }
 
     async kick(player: alt.Player, eventName: string, needAccount: boolean) {
-        await BanController.ban(player, `Blocked event: ${eventName} - ${needAccount}`, 0, 0);
+        alt.emit("Ban::Player", player, `Blocked event: ${eventName} - ${needAccount}`, 0, 0);
         player.kick("Du wurdest vom Anticheat gesperrt! Bitte finde dich im Support ein.");
     }
 }

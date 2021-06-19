@@ -28,7 +28,9 @@ class AuthController {
             const account: IDatabaseAccount = res[0];
 
             if(await bcrypt.compare(password, account.password)) {
+                alt.emitClient(player, "Login::SaveUsername", username);
                 alt.emitClient(player, "Window::close", "Login");
+                
                 player.account = new Account(account);
 
                 if(account.characterData == "{}") alt.emit('character:Edit', player);
