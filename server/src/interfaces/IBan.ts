@@ -16,6 +16,7 @@ export default interface IBan {
     reason: string;
     adminId: number;
 
+    expireDate: string;
     createdAt: string;
     updatedAt: string;
 }

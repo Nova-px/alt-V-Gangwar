@@ -13,10 +13,16 @@ import "./controller/EventController";
 import "./controller/CharacterController";
 
 import EventController from './controller/EventController';
+import BanController from './controller/BanController';
 
-EventController.onClient("PlayerReady", player => {
+EventController.onClient("PlayerReady", async player => {
     player.model = alt.hash("mp_m_freemode_01");
     player.spawn(0, 0, 73, 0);
+
+    if(await BanController.checkPlayer(player)) {
+        player.kick(`Du bist gesperrt! Bitte melde dich im Support.`);
+        return;
+    }
 
     alt.emitClient(player, "Window::show", "Login", {});
 }, false);
