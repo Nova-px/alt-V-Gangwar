@@ -8,7 +8,7 @@ export interface IDatabaseAccount {
     kills: number;
     deaths: number;
 
-    character: string;
+    characterData: string;
 
     createdAt: string;
     updatedAt: string;

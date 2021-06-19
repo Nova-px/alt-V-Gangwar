@@ -12,14 +12,14 @@ class DatabaseController {
     private pool: mysql.Pool;
 
     constructor() {
-        this.pool = mysql.createPool({ host: "localhost", user: "gangwar", password: "gangwar", database: "gangwar" });
+        this.pool = mysql.createPool({ host: "localhost", user: "gangwar", password: "gangwar", database: "gangwar", insecureAuth: true });
     }
 
     async query(command: string, args: any[] = []): Promise<null | any[]> {
         return new Promise(resolve => {
             this.pool.query(command, args, (err, result) => {
                 if(err) {
-                    alt.logError(`[DatabaseController] ERROR: ${err}`);
+                    alt.logError(`[DatabaseController] ${err}`);
                     return resolve(null);
                 }
 

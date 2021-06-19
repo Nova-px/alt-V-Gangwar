@@ -1,4 +1,5 @@
 import alt from 'alt-client';
+
 import EventController from '../controller/EventController';
 import View from './View';
 
@@ -13,6 +14,7 @@ class WebView {
         });
 
         this.webView.on("Window::onOpen", this.onOpen.bind(this));
+        this.webView.on("Window::onClose", this.onClose.bind(this));
 
         EventController.onServer("Window::show", this.showWindow.bind(this));
         EventController.onServer("Window::close", this.closeWindow.bind(this));
@@ -25,18 +27,26 @@ class WebView {
 
     closeWindow(name: string) {
         this.webView.emit("Window::close", name);
-
-        const view = View.getByName(name);
-        if(view) view.visible = false;
     }
 
-    notify(type: string, text: string) {
-        this.webView.emit("Notify", type, text);
+    notify(data: any) {
+        this.webView.emit("Notify", data);
     }
 
     onOpen(name: string) {
         const view = View.getByName(name);
-        if(view) view.visible = true;
+        if(view) {
+            view.visible = true;
+            view.onOpen();
+        }
+    }
+
+    onClose(name: string) {
+        const view = View.getByName(name);
+        if(view) {
+            view.visible = false;
+            view.onClose();
+        }
     }
 }
 

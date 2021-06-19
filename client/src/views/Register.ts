@@ -1,16 +1,13 @@
-import alt from 'alt-client';
-import game from 'natives';
-
 import View from '../classes/View';
 import ControlsController from '../controller/ControlsController';
 import EventController from '../controller/EventController';
 
-class LoginView extends View {
+class RegisterView extends View {
     constructor() {
-        super("Login");
+        super("Register");
 
         this.on("Auth", this.onAuth.bind(this));
-        EventController.onServer("Login::Response", this.onResponse.bind(this));
+        EventController.onServer("Register::Response", this.onResponse.bind(this));
     }
 
     onOpen() {
@@ -23,8 +20,8 @@ class LoginView extends View {
         ControlsController.toggleGameControls(true);
     }
 
-    onAuth(username: string, password: string) {
-        EventController.emitServer("Auth::Login", username, password);
+    onAuth(username: string, password: string, repeatPassword: string) {
+        EventController.emitServer("Auth::Register", username, password, repeatPassword);
     }
 
     onResponse(text: string) {
@@ -32,4 +29,4 @@ class LoginView extends View {
     }
 }
 
-export default new LoginView();
+export default new RegisterView();

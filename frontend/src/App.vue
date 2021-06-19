@@ -3,18 +3,20 @@
         <v-main>
             <HUD v-if="showHUD" />
 
-            <component v-for="(window, i) in windows" :key="i" style="position: absolute;" :is="window.name" :data="window.data" :mounted="onOpen(window.name)" />
+            <component v-for="(window, i) in windows" :key="i" style="position: absolute;" :is="window.name" :data="window.data" :mounted="onOpen(window.name)" v-on:showWindow="showWindow" v-on:closeWindow="closeWindow" />
         </v-main>
     </v-app>
 </template>
 
 <script>
 import Login from './views/Login.vue';
+import Register from './views/Register.vue';
 import HUD from './views/HUD.vue';
 
 export default {
     components: {
         Login,
+        Register,
         HUD
     },
 
@@ -28,21 +30,30 @@ export default {
     methods: {
         onOpen(name) {
             this.$alt.emit("Window::onOpen", name);
+        },
+        showWindow(name, args) {
+            if(this.windows.some(x => x.name === name)) return;
+            this.windows.push({ name, data: args });
+        },
+        closeWindow(name) {
+            if(!this.windows.some(x => x.name === name)) return;
+
+            this.windows = this.windows.filter(x => x.name != name)
+            this.$alt.emit("Window::onClose", name);
         }
     },
 
     mounted() {
-        this.$alt.on("Window::show", (name, args) => {
-            this.windows.push({ name, data: { ...args } });
-        });
+        this.$alt.on("Window::show", this.showWindow.bind(this));
+        this.$alt.on("Window::close", this.closeWindow.bind(this));
+        this.$alt.on("Notify", (data) => this.$toast(data.text, { type: data.type }));
 
-        this.$alt.on("Window::close", name => {
-            if(!this.windows.some(x => x.name === name)) return;
-
-            this.windows.slice(this.windows.findIndex(x => x.name === name), 1);
-        });
-
-        this.$alt.on("Notify", (type, text) => this.$toast(text, { type }));
+        if(!("alt" in window)) {
+            window.dev = {};
+            
+            window.dev.showWindow = this.showWindow;
+            window.dev.closeWindow = this.closeWindow;
+        }
     }
 }
 </script>

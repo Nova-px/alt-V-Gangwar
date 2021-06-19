@@ -32,7 +32,7 @@ export default class Account {
         this.kills = data.kills;
         this.deaths = data.deaths;
         
-        this.character = JSON.parse(data.character);
+        this.character = JSON.parse(data.characterData);
 
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = new Date(data.updatedAt);

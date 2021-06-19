@@ -12,6 +12,8 @@ import "./classes/Account";
 
 import "./controller/AuthController";
 import "./controller/EventController";
+import "./controller/CharacterController";
+
 import EventController from './controller/EventController';
 
 EventController.onClient("PlayerReady", player => {

@@ -6,22 +6,23 @@
                     <v-toolbar dense color="primary">
                         <v-toolbar-title>
                             <v-icon left>mdi-login</v-icon>
-                            Anmeldung
+                            Registrierung
                         </v-toolbar-title>
                     </v-toolbar>
                     <v-card-text>
                         <v-text-field prepend-icon="mdi-account" v-model="username" label="Benutzername" required />
                         <v-text-field prepend-icon="mdi-lock" v-model="password" label="Password" type="password" required counter />
+                        <v-text-field prepend-icon="mdi-lock" v-model="repeatPassword" label="Password wiederholen" type="password" required counter />
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn @click="switchToRegister()">
+                        <v-btn>
                             <v-icon left>mdi-arrow-left</v-icon>
-                            Account erstellen
+                            Du hast bereits einen Account?
                         </v-btn>
                         <v-spacer />
-                        <v-btn color="success" @click="login()" :loading="loading">
+                        <v-btn color="success" @click="register()" :loading="loading">
                             <v-icon left>mdi-check</v-icon>
-                            Anmelden
+                            Registrieren
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -31,40 +32,29 @@
 </template>
 <script>
 export default {
-    name: "Login",
-    props: {
-        data: {
-            type: Object,
-            required: false
-        },
-    },
+    name: "Register",
     data() {
         return {
             username: '',
             password: '',
+            repeatPassword: '',
 
             loading: false
         }
     },
 
     methods: {
-        login() {
+        register() {
             this.loading = true;
-            this.$alt.emit("Login::Auth", this.username, this.password);
-        },
-        switchToRegister() {
-            this.$emit("showWindow", "Register", {});
-            this.$emit("closeWindow", "Login");
+            this.$alt.emit("Register::Auth", this.username, this.password, this.repeatPassword);
         }
     },
 
     mounted() {
-        this.$alt.on("Login::Response", text => {
+        this.$alt.on("Register::Response", text => {
             this.loading = false;
-            this.$toast.error(text);
+            if(text) this.$toast.error(text);
         });
-
-        if(this.data && this.data.username) this.username = this.data.username;
     }
 }
 </script>

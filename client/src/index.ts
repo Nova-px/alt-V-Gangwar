@@ -6,3 +6,4 @@ import "./controller/ControlsController";
 import "./controller/EventController";
 
 import "./views/Login";
+import "./views/Register";
