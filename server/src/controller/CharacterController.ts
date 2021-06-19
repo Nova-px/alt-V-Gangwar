@@ -6,11 +6,7 @@
  * By downloading you agree that you never will sell this project/files.
 */
 import alt from 'alt-server';
-import bcrypt from 'bcryptjs';
-import Account from '../classes/Account';
-import { IDatabaseAccount } from '../interfaces/IAccount';
 import DatabaseController from './DatabaseController';
-import EventController from './EventController';
 
 class CharacterController {
     constructor() {
