@@ -7,7 +7,6 @@
 */
 import alt from 'alt-server';
 import moment from 'moment';
-import Account from '../classes/Account';
 import IBan from '../interfaces/IBan';
 import DatabaseController from './DatabaseController';
 import EventController from './EventController';
