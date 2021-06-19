@@ -1,3 +1,5 @@
+import { IDatabaseAccount } from "../interfaces/IAccount";
+
 /**
  * @license
 
@@ -10,10 +12,25 @@ export default class Account {
 
     username: string;
     password: string;
+    rankId: number;
 
-    constructor(id: number, username: string, password: string) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
+    kills: number;
+    deaths: number;
+
+    createdAt: Date;
+    updatedAt: Date;
+
+    constructor(data: IDatabaseAccount) {
+        this.id = data.id;
+
+        this.username = data.username;
+        this.password = data.password;
+        this.rankId = data.rankId;
+        
+        this.kills = data.kills;
+        this.deaths = data.deaths;
+
+        this.createdAt = new Date(data.createdAt);
+        this.updatedAt = new Date(data.updatedAt);
     }
 }

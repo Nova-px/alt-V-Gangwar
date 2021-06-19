@@ -7,6 +7,8 @@
  */
 import alt from 'alt-server';
 import argon2 from 'argon2';
+import Account from '../classes/Account';
+import { IDatabaseAccount } from '../interfaces/IAccount';
 import DatabaseController from './DatabaseController';
 
 import EventController from './EventController';
@@ -23,9 +25,11 @@ class AuthController {
 
         const res = await DatabaseController.query("SELECT * FROM accounts WHERE username = ?", [username]);
         if(res != null) {
-            const account = res[0];
+            const account: IDatabaseAccount = res[0];
 
             if(await argon2.verify(account.password, password)) {
+                player.account = new Account(account);
+                
                 // TODO: login and character creation
                 
             } else return alt.emitClient(player, "Login::Response", "Das angegebene Passwort ist inkorrekt!");

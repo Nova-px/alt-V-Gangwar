@@ -7,7 +7,7 @@
  */
 import alt from 'alt-server';
 import mysql from 'mysql';
- 
+
 class DatabaseController {
     private pool: mysql.Pool;
 
